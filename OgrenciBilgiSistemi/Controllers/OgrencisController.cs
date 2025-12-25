@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,22 +10,28 @@ using OgrenciBilgiSistemi.Models;
 
 namespace OgrenciBilgiSistemi.Controllers
 {
-    public class OgrencisController : Controller
+    // ÖNEMLİ: Adres çubuğunda "Ogrenciler" yerine "Ogrencis" yazmasını bu satır sağlar.
+    [Route("Ogrencis")]
+    public class OgrencilerController : Controller
     {
         private readonly UygulamaDbContext _context;
 
-        public OgrencisController(UygulamaDbContext context)
+        public OgrencilerController(UygulamaDbContext context)
         {
             _context = context;
         }
 
         // GET: Ogrencis
+        // Hem /Ogrencis hem de /Ogrencis/Index adresine cevap verir
+        [Route("")]
+        [Route("Index")]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Ogrenciler.ToListAsync());
         }
 
         // GET: Ogrencis/Details/5
+        [Route("Details/{id}")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -44,16 +50,16 @@ namespace OgrenciBilgiSistemi.Controllers
         }
 
         // GET: Ogrencis/Create
+        [Route("Create")]
         public IActionResult Create()
         {
             return View();
         }
 
         // POST: Ogrencis/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Create")]
         public async Task<IActionResult> Create([Bind("Id,Ad,Soyad,OkulNo,Sinif,Bolum,KayitTarihi")] Ogrenci ogrenci)
         {
             if (ModelState.IsValid)
@@ -66,6 +72,7 @@ namespace OgrenciBilgiSistemi.Controllers
         }
 
         // GET: Ogrencis/Edit/5
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -82,10 +89,9 @@ namespace OgrenciBilgiSistemi.Controllers
         }
 
         // POST: Ogrencis/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Ad,Soyad,OkulNo,Sinif,Bolum,KayitTarihi")] Ogrenci ogrenci)
         {
             if (id != ogrenci.Id)
@@ -117,6 +123,7 @@ namespace OgrenciBilgiSistemi.Controllers
         }
 
         // GET: Ogrencis/Delete/5
+        [Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,6 +144,7 @@ namespace OgrenciBilgiSistemi.Controllers
         // POST: Ogrencis/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ogrenci = await _context.Ogrenciler.FindAsync(id);
