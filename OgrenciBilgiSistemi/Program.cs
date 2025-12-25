@@ -3,24 +3,28 @@ using OgrenciBilgiSistemi.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Servisleri ekle
+builder.Services.AddControllersWithViews();
 
-// ... (kodun �st k�s�mlar�)
-
-// SQLite Ba�lant�s�n� ekle
+// Veritabanı bağlantısı
 builder.Services.AddDbContext<UygulamaDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ...
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// !!! İŞTE BU KISIM EKSİK OLABİLİR !!!
+// Uygulama her başladığında veritabanı yoksa oluşturur ve günceller.
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<UygulamaDbContext>();
+    context.Database.Migrate(); // Bu komut veritabanını ve tabloları oluşturur
+}
+// !!! BURAYA KADAR !!!
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
