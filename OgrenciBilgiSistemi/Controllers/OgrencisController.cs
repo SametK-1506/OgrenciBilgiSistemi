@@ -10,8 +10,6 @@ using OgrenciBilgiSistemi.Models;
 
 namespace OgrenciBilgiSistemi.Controllers
 {
-    // ÖNEMLİ: Adres çubuğunda "Ogrenciler" yerine "Ogrencis" yazmasını bu satır sağlar.
-    [Route("Ogrencis")]
     public class OgrencilerController : Controller
     {
         private readonly UygulamaDbContext _context;
@@ -21,17 +19,13 @@ namespace OgrenciBilgiSistemi.Controllers
             _context = context;
         }
 
-        // GET: Ogrencis
-        // Hem /Ogrencis hem de /Ogrencis/Index adresine cevap verir
-        [Route("")]
-        [Route("Index")]
+        // GET: Ogrenciler
         public async Task<IActionResult> Index()
         {
             return View(await _context.Ogrenciler.ToListAsync());
         }
 
-        // GET: Ogrencis/Details/5
-        [Route("Details/{id}")]
+        // GET: Ogrenciler/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -49,17 +43,15 @@ namespace OgrenciBilgiSistemi.Controllers
             return View(ogrenci);
         }
 
-        // GET: Ogrencis/Create
-        [Route("Create")]
+        // GET: Ogrenciler/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Ogrencis/Create
+        // POST: Ogrenciler/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Create")]
         public async Task<IActionResult> Create([Bind("Id,Ad,Soyad,OkulNo,Sinif,Bolum,KayitTarihi")] Ogrenci ogrenci)
         {
             if (ModelState.IsValid)
@@ -71,8 +63,7 @@ namespace OgrenciBilgiSistemi.Controllers
             return View(ogrenci);
         }
 
-        // GET: Ogrencis/Edit/5
-        [Route("Edit/{id}")]
+        // GET: Ogrenciler/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -88,10 +79,9 @@ namespace OgrenciBilgiSistemi.Controllers
             return View(ogrenci);
         }
 
-        // POST: Ogrencis/Edit/5
+        // POST: Ogrenciler/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Route("Edit/{id}")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Ad,Soyad,OkulNo,Sinif,Bolum,KayitTarihi")] Ogrenci ogrenci)
         {
             if (id != ogrenci.Id)
@@ -122,8 +112,7 @@ namespace OgrenciBilgiSistemi.Controllers
             return View(ogrenci);
         }
 
-        // GET: Ogrencis/Delete/5
-        [Route("Delete/{id}")]
+        // GET: Ogrenciler/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -141,10 +130,9 @@ namespace OgrenciBilgiSistemi.Controllers
             return View(ogrenci);
         }
 
-        // POST: Ogrencis/Delete/5
+        // POST: Ogrenciler/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Route("Delete/{id}")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var ogrenci = await _context.Ogrenciler.FindAsync(id);
